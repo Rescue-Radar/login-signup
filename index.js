@@ -28,9 +28,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const cors = require('cors');
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const dotenv = __importStar(require("dotenv"));
-dotenv.config();
+dotenv.config({ path: `${__dirname}/config.env` });
 const port = process.env.PORT;
 //handle uncaught err
 // process.on("uncaughtException", function (err) {
@@ -45,15 +46,14 @@ app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cors({
-    credentials: true
+    credentials: true,
 }));
+app.use(cookieParser());
 app.use("/api", caseRoutes_1.default);
 app.use("/api", auth_routes_1.default);
 app.get("/", (req, res) => {
     const CurrentDateTime = new Date().toLocaleString();
-    res
-        .status(200)
-        .json({
+    res.status(200).json({
         HTTPCode: "200",
         Status: "OK",
         message: "Welcome to Home",
