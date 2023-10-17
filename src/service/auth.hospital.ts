@@ -19,11 +19,7 @@ import { userInfo } from "os";
 import { json } from "body-parser";
 export class signupService {
 	//---------------------------------------------------------------------------
-	public createSendtoken = async (
-		userId: string,
-		res: Response,
-		data: Record<string, any>
-	) => {
+	public createSendtoken = async (userId: string) => {
 		if (!process.env.JWT_SECRET) {
 			throw new Error("JWT_SECRET is not defined");
 		}
@@ -31,16 +27,7 @@ export class signupService {
 			expiresIn: process.env.JWT_EXPIRES_IN,
 		});
 
-		//these are the cookie options...
-		const cookieOptions = {
-			//converting into ms
-			expiresIn: new Date(
-				Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60
-			),
-			//this will prevent the browser from accessing the cookie and make it transportOnly
-			httpOnly: true,
-		};
-		res.status(201).json({ data, token: token });
+		return token;
 	};
 
 	public signupHospital = async (req: Request, res: Response) => {
@@ -83,10 +70,22 @@ export class signupService {
 			status
 		);
 
-		this.createSendtoken(id, res, {
+		const token = await this.createSendtoken(id);
+		const data = {
 			message: "Successfully Created",
 			user: newUser.rows[0],
-		});
+		};
+		//these are the cookie options...
+		const cookieOptions = {
+			//converting into ms
+			expiresIn: new Date(
+				Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60
+			),
+			//this will prevent the browser from accessing the cookie and make it transportOnly
+			httpOnly: true,
+		};
+		res.cookie("jwt", token, cookieOptions);
+		res.status(201).json({ data, token: token });
 	};
 
 	public signupPatient = async (req: Request, res: Response) => {
@@ -121,10 +120,22 @@ export class signupService {
 			emergencyContact,
 			address
 		);
-		this.createSendtoken(id, res, {
-			message: "Successfully Registered",
+		const token = await this.createSendtoken(id);
+		const data = {
+			message: "Successfully Created",
 			user: newUser.rows[0],
-		});
+		};
+		//these are the cookie options...
+		const cookieOptions = {
+			//converting into ms
+			expiresIn: new Date(
+				Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60
+			),
+			//this will prevent the browser from accessing the cookie and make it transportOnly
+			httpOnly: true,
+		};
+		res.cookie("jwt", token, cookieOptions);
+		res.status(201).json({ data, token: token });
 	};
 
 	public loginHospital = async (req: Request, res: Response) => {
@@ -143,10 +154,22 @@ export class signupService {
 		if (!isPasswordValid) {
 			return res.status(401).json({ message: "Invalid password" });
 		}
-		this.createSendtoken(user.id, res, {
-			message: "Successfully Logged In",
+		const token = await this.createSendtoken(user.id);
+		const data = {
+			message: "Successfully LoggedIn",
 			user: user,
-		});
+		};
+		//these are the cookie options...
+		const cookieOptions = {
+			//converting into ms
+			expiresIn: new Date(
+				Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60
+			),
+			//this will prevent the browser from accessing the cookie and make it transportOnly
+			httpOnly: true,
+		};
+		res.cookie("jwt", token, cookieOptions);
+		res.status(201).json({ data, token: token });
 	};
 	public loginPatient = async (req: Request, res: Response) => {
 		const { email, password }: loginUser = req.body;
@@ -164,9 +187,21 @@ export class signupService {
 		if (!isPasswordValid) {
 			return res.status(401).json({ message: "Invalid password" });
 		}
-		this.createSendtoken(user.id, res, {
-			message: "Successfully Logged In",
+		const token = await this.createSendtoken(user.id);
+		const data = {
+			message: "Successfully LoggedIn",
 			user: user,
-		});
+		};
+		//these are the cookie options...
+		const cookieOptions = {
+			//converting into ms
+			expiresIn: new Date(
+				Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60
+			),
+			//this will prevent the browser from accessing the cookie and make it transportOnly
+			httpOnly: true,
+		};
+		res.cookie("jwt", token, cookieOptions);
+		res.status(201).json({ data, token: token });
 	};
 }

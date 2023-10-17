@@ -23,8 +23,8 @@ function validateHospitalRequiredFields(req, res, next) {
         password: "string",
         licenseId: "string",
         capacity: "number",
-        longitude: "string",
-        latitude: "string",
+        longitude: "number",
+        latitude: "number",
         address: "string",
         status: "string",
     };
@@ -91,12 +91,9 @@ function validatePatientRequiredFields(req, res, next) {
 }
 exports.validatePatientRequiredFields = validatePatientRequiredFields;
 function validateLogin(req, res, next) {
-    const { email, Password, } = req.body;
+    const { email, Password } = req.body;
     // Define the list of required fields
-    const requiredFields = [
-        "email",
-        "password",
-    ];
+    const requiredFields = ["email", "password"];
     const fieldDataTypes = {
         email: "string",
         password: "string",

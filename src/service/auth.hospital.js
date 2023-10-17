@@ -40,21 +40,14 @@ const hashPassword_1 = require("../util/hashPassword");
 class signupService {
     constructor() {
         //---------------------------------------------------------------------------
-        this.createSendtoken = (userId, res, data) => __awaiter(this, void 0, void 0, function* () {
+        this.createSendtoken = (userId) => __awaiter(this, void 0, void 0, function* () {
             if (!process.env.JWT_SECRET) {
                 throw new Error("JWT_SECRET is not defined");
             }
             const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
                 expiresIn: process.env.JWT_EXPIRES_IN,
             });
-            //these are the cookie options...
-            const cookieOptions = {
-                //converting into ms
-                expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
-                //this will prevent the browser from accessing the cookie and make it transportOnly
-                httpOnly: true,
-            };
-            res.status(201).json({ data, token: token });
+            return token;
         });
         this.signupHospital = (req, res) => __awaiter(this, void 0, void 0, function* () {
             // console.log(req.body);
@@ -69,10 +62,20 @@ class signupService {
             const hashedPassword = (0, hashPassword_1.hashPassword)(password);
             const newPassword = yield hashedPassword;
             const newUser = yield (0, auth_hospital_1.insertIntoHospital)(id, name, phoneNumber, email, newPassword, licenseId, capacity, longitude, latitude, address, status);
-            this.createSendtoken(id, res, {
+            const token = yield this.createSendtoken(id);
+            const data = {
                 message: "Successfully Created",
                 user: newUser.rows[0],
-            });
+            };
+            //these are the cookie options...
+            const cookieOptions = {
+                //converting into ms
+                expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
+                //this will prevent the browser from accessing the cookie and make it transportOnly
+                httpOnly: true,
+            };
+            res.cookie("jwt", token, cookieOptions);
+            res.status(201).json({ data, token: token });
         });
         this.signupPatient = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { name, phoneNumber, email, password, gender, address, emergencyContact, } = req.body;
@@ -86,10 +89,20 @@ class signupService {
             const hashedPassword = (0, hashPassword_1.hashPassword)(password);
             const newPassword = yield hashedPassword;
             const newUser = yield (0, auth_hospital_1.insertIntoPatient)(id, name, phoneNumber, email, newPassword, gender, emergencyContact, address);
-            this.createSendtoken(id, res, {
-                message: "Successfully Registered",
+            const token = yield this.createSendtoken(id);
+            const data = {
+                message: "Successfully Created",
                 user: newUser.rows[0],
-            });
+            };
+            //these are the cookie options...
+            const cookieOptions = {
+                //converting into ms
+                expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
+                //this will prevent the browser from accessing the cookie and make it transportOnly
+                httpOnly: true,
+            };
+            res.cookie("jwt", token, cookieOptions);
+            res.status(201).json({ data, token: token });
         });
         this.loginHospital = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
@@ -104,10 +117,20 @@ class signupService {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: "Invalid password" });
             }
-            this.createSendtoken(user.id, res, {
-                message: "Successfully Logged In",
+            const token = yield this.createSendtoken(user.id);
+            const data = {
+                message: "Successfully LoggedIn",
                 user: user,
-            });
+            };
+            //these are the cookie options...
+            const cookieOptions = {
+                //converting into ms
+                expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
+                //this will prevent the browser from accessing the cookie and make it transportOnly
+                httpOnly: true,
+            };
+            res.cookie("jwt", token, cookieOptions);
+            res.status(201).json({ data, token: token });
         });
         this.loginPatient = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
@@ -122,10 +145,20 @@ class signupService {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: "Invalid password" });
             }
-            this.createSendtoken(user.id, res, {
-                message: "Successfully Logged In",
+            const token = yield this.createSendtoken(user.id);
+            const data = {
+                message: "Successfully LoggedIn",
                 user: user,
-            });
+            };
+            //these are the cookie options...
+            const cookieOptions = {
+                //converting into ms
+                expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
+                //this will prevent the browser from accessing the cookie and make it transportOnly
+                httpOnly: true,
+            };
+            res.cookie("jwt", token, cookieOptions);
+            res.status(201).json({ data, token: token });
         });
     }
 }
