@@ -15,8 +15,8 @@ import {
 } from "../interfaces/auth.hospital";
 import { v4 as uuidv4 } from "uuid";
 import { comparePassword, hashPassword } from "../util/hashPassword";
-import { userInfo } from "os";
-import { json } from "body-parser";
+// import { userInfo } from "os";
+// import { json } from "body-parser";
 export class signupService {
 	//---------------------------------------------------------------------------
 	public createSendtoken = async (

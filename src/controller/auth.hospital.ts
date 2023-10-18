@@ -51,7 +51,7 @@ export default class SignupHospital extends signupService {
 				// To check for the jwt in cookie
 				token = req.cookies.jwt;
 			} else {
-				throw new Error("You are not logged in; please login to get access");
+				throw new Error("You are not logged in, please login to get access");
 			}
 
 			if (!process.env.JWT_SECRET) {
