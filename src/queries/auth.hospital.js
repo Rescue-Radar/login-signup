@@ -27,40 +27,52 @@ const isEmailExistInPatient = (email) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.isEmailExistInPatient = isEmailExistInPatient;
 const insertIntoHospital = (id, name, phoneNumber, email, password, licenseId, capacity, longitude, latitude, address, status) => __awaiter(void 0, void 0, void 0, function* () {
-    const insertUserQuery = `INSERT INTO hospital 
-  (id, name, "phoneNumber", email, password, "licenseId", capacity, longitude, latitude, address, status) 
+    const insertUserQuery = `INSERT INTO public.hospital 
+  (id, name, "phoneNumber", email, password, "licenseId", capacity,longitude,latitude, address, status) 
 VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11) RETURNING *`;
-    const result = yield db_config_1.default.query(insertUserQuery, [
-        id,
-        name,
-        phoneNumber,
-        email,
-        password,
-        licenseId,
-        capacity,
-        longitude,
-        latitude,
-        address,
-        status,
-    ]);
-    return result;
+    try {
+        const result = yield db_config_1.default.query(insertUserQuery, [
+            id,
+            name,
+            phoneNumber,
+            email,
+            password,
+            licenseId,
+            capacity,
+            longitude,
+            latitude,
+            address,
+            status,
+        ]);
+        return result;
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error("Error Occured");
+    }
 });
 exports.insertIntoHospital = insertIntoHospital;
 const insertIntoPatient = (id, name, phoneNumber, email, password, gender, emergencyContact, address) => __awaiter(void 0, void 0, void 0, function* () {
-    const insertUserQuery = `INSERT INTO patient 
-  (id, name,gender, "phoneNumber", email,  address, password, "emergencyContact") 
-VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
-    const result = yield db_config_1.default.query(insertUserQuery, [
-        id,
-        name,
-        gender,
-        phoneNumber,
-        email,
-        address,
-        password,
-        emergencyContact,
-    ]);
-    return result;
+    try {
+        const insertUserQuery = `INSERT INTO public.patient 
+		(id, name,gender, "phoneNumber", email,  address, password, "emergencyContact") 
+	  VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+        const result = yield db_config_1.default.query(insertUserQuery, [
+            id,
+            name,
+            gender,
+            phoneNumber,
+            email,
+            address,
+            password,
+            emergencyContact,
+        ]);
+        return result;
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error("Error occured");
+    }
 });
 exports.insertIntoPatient = insertIntoPatient;
 const loginEmailHospital = (email) => __awaiter(void 0, void 0, void 0, function* () {

@@ -1,3 +1,4 @@
+import { connect } from "http2";
 import pool from "../configs/db.config";
 
 export const isEmailExistInHospital = async (email: string) => {
@@ -21,30 +22,35 @@ export const insertIntoHospital = async (
 	password: string,
 	licenseId: string,
 	capacity: number,
-	longitude: string,
-	latitude: string,
+	longitude: number,
+	latitude: number,
 	address: string,
 	status: string
 ) => {
-	const insertUserQuery = `INSERT INTO hospital 
-  (id, name, "phoneNumber", email, password, "licenseId", capacity, longitude, latitude, address, status) 
+	const insertUserQuery = `INSERT INTO public.hospital 
+  (id, name, "phoneNumber", email, password, "licenseId", capacity,longitude,latitude, address, status) 
 VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11) RETURNING *`;
 
-	const result = await pool.query(insertUserQuery, [
-		id,
-		name,
-		phoneNumber,
-		email,
-		password,
-		licenseId,
-		capacity,
-		longitude,
-		latitude,
-		address,
-		status,
-	]);
+	try {
+		const result = await pool.query(insertUserQuery, [
+			id,
+			name,
+			phoneNumber,
+			email,
+			password,
+			licenseId,
+			capacity,
+			longitude,
+			latitude,
+			address,
+			status,
+		]);
 
-	return result;
+		return result;
+	} catch (error) {
+		console.log(error);
+		throw new Error("Error Occured");
+	}
 };
 
 export const insertIntoPatient = async (
@@ -57,22 +63,27 @@ export const insertIntoPatient = async (
 	emergencyContact: number,
 	address: string
 ) => {
-	const insertUserQuery = `INSERT INTO patient 
-  (id, name,gender, "phoneNumber", email,  address, password, "emergencyContact") 
-VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+	try {
+		const insertUserQuery = `INSERT INTO public.patient 
+		(id, name,gender, "phoneNumber", email,  address, password, "emergencyContact") 
+	  VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
 
-	const result = await pool.query(insertUserQuery, [
-		id,
-		name,
-		gender,
-		phoneNumber,
-		email,
-		address,
-		password,
-		emergencyContact,
-	]);
+		const result = await pool.query(insertUserQuery, [
+			id,
+			name,
+			gender,
+			phoneNumber,
+			email,
+			address,
+			password,
+			emergencyContact,
+		]);
 
-	return result;
+		return result;
+	} catch (error) {
+		console.log(error);
+		throw new Error("Error occured");
+	}
 };
 
 export const loginEmailHospital = async (email: string) => {
