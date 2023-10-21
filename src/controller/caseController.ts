@@ -15,6 +15,7 @@ export const createCase = async (req: Request, res: Response) => {
         }
 
         const token =  generateUserToken();
+        console.log("Latitude->",latitude, "Longitude->",longitude)
         console.log("Toekn->",token);
         if (token!='ERR_NO_TOKEN') {
                 sendWhatsappMessage(latitude, longitude, phoneNo, token);

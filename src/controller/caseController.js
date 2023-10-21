@@ -19,6 +19,7 @@ const createCase = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             res.status(403).json({ message: "Inputs are missing" });
         }
         const token = (0, tokenGenerator_1.generateUserToken)();
+        console.log("Latitude->", latitude, "Longitude->", longitude);
         console.log("Toekn->", token);
         if (token != 'ERR_NO_TOKEN') {
             (0, whatsappSender_1.sendWhatsappMessage)(latitude, longitude, phoneNo, token);

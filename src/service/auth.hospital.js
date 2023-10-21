@@ -37,6 +37,8 @@ const jwt = __importStar(require("jsonwebtoken"));
 const auth_hospital_1 = require("../queries/auth.hospital");
 const uuid_1 = require("uuid");
 const hashPassword_1 = require("../util/hashPassword");
+// import { userInfo } from "os";
+// import { json } from "body-parser";
 class signupService {
     constructor() {
         //---------------------------------------------------------------------------

@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 dotenv.config({ path: `${__dirname}/config.env` });
-const port = process.env.PORT;
+const port = 8000||process.env.PORT||8000;
 //handle uncaught err
 // process.on("uncaughtException", function (err) {
 //   console.log(`uncaughterror-> ${err}`);
@@ -46,6 +46,6 @@ app.get("*", (req, res) => {
 	res.status(404).json({ message: "Route not found" });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(8000, () => {
 	console.log(`server is running at port ${port} `);
 });

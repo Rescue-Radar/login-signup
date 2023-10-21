@@ -83,7 +83,7 @@ class SignupHospital extends auth_hospital_1.signupService {
                     token = req.cookies.jwt;
                 }
                 else {
-                    throw new Error("You are not logged in; please login to get access");
+                    throw new Error("You are not logged in, please login to get access");
                 }
                 if (!process.env.JWT_SECRET) {
                     throw new Error("Misssing JWT_SECRET");
