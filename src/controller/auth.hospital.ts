@@ -62,7 +62,7 @@ export default class SignupHospital extends signupService {
 			const payload = await jwt.verify(token, process.env.JWT_SECRET);
 
 			// Continue with the next middleware or route handler
-			next();
+			res.status(200).json({ message: "Authorized" });
 		} catch (error) {
 			// Handle the error and return a response
 			res.status(401).json({ error: "Unauthorized" });

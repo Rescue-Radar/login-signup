@@ -40,6 +40,11 @@ const port = 8000 || process.env.PORT || 8000;
 const caseRoutes_1 = __importDefault(require("./src/routes/caseRoutes"));
 const auth_routes_1 = __importDefault(require("./src/routes/auth.routes"));
 const app = (0, express_1.default)();
+// Allow requests from http://localhost:5173
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true, // You might need this if you are using cookies for authentication
+}));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 // parse application/json
 app.use(body_parser_1.default.json());

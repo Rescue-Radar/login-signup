@@ -83,6 +83,7 @@ export class signupService {
 			),
 			//this will prevent the browser from accessing the cookie and make it transportOnly
 			httpOnly: true,
+			sameSite: "none", // Set the SameSite attribute to None
 		};
 		res.cookie("jwt", token, cookieOptions);
 		res.status(201).json({ data, token: token });
@@ -113,7 +114,7 @@ export class signupService {
 		const newUser = await insertIntoPatient(
 			id,
 			name,
-			phoneNumber,
+			Number(phoneNumber),
 			email,
 			newPassword,
 			gender,
@@ -169,7 +170,7 @@ export class signupService {
 			httpOnly: true,
 		};
 		res.cookie("jwt", token, cookieOptions);
-		res.status(201).json({ data, token: token });
+		res.status(200).json({ data, token: token });
 	};
 	public loginPatient = async (req: Request, res: Response) => {
 		const { email, password }: loginUser = req.body;
@@ -202,6 +203,6 @@ export class signupService {
 			httpOnly: true,
 		};
 		res.cookie("jwt", token, cookieOptions);
-		res.status(201).json({ data, token: token });
+		res.status(200).json({ data, token: token });
 	};
 }

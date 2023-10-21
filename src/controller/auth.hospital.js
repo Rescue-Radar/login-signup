@@ -91,7 +91,7 @@ class SignupHospital extends auth_hospital_1.signupService {
                 // Verification of Token
                 const payload = yield jwt.verify(token, process.env.JWT_SECRET);
                 // Continue with the next middleware or route handler
-                next();
+                res.status(200).json({ message: "Authorized" });
             }
             catch (error) {
                 // Handle the error and return a response
