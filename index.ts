@@ -16,6 +16,14 @@ import caseRoutes from "./src/routes/caseRoutes";
 import signupRoutes from "./src/routes/auth.routes";
 
 const app = express();
+// Allow requests from http://localhost:5173
+app.use(
+	cors({
+		origin: "http://localhost:5173",
+		credentials: true, // You might need this if you are using cookies for authentication
+	})
+);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json

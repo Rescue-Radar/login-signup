@@ -19,5 +19,6 @@ router.post("/h/signup", validateHospitalRequiredFields, signupHospitalUser);
 router.post("/h/login", validateLogin, loginHospitaluser);
 router.post("/p/signup", validatePatientRequiredFields, signupPatientUser);
 router.post("/p/login", validateLogin, loginPatientUser);
+router.get("/isLoggedIn", protect);
 
 export default router;

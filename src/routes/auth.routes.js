@@ -13,4 +13,5 @@ router.post("/h/signup", signup_middleware_1.validateHospitalRequiredFields, sig
 router.post("/h/login", signup_middleware_1.validateLogin, loginHospitaluser);
 router.post("/p/signup", signup_middleware_1.validatePatientRequiredFields, signupPatientUser);
 router.post("/p/login", signup_middleware_1.validateLogin, loginPatientUser);
+router.get("/isLoggedIn", protect);
 exports.default = router;

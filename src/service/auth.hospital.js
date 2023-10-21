@@ -73,6 +73,7 @@ class signupService {
                 expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
                 //this will prevent the browser from accessing the cookie and make it transportOnly
                 httpOnly: true,
+                sameSite: "none", // Set the SameSite attribute to None
             };
             res.cookie("jwt", token, cookieOptions);
             res.status(201).json({ data, token: token });
@@ -88,7 +89,7 @@ class signupService {
             const id = (0, uuid_1.v4)();
             const hashedPassword = (0, hashPassword_1.hashPassword)(password);
             const newPassword = yield hashedPassword;
-            const newUser = yield (0, auth_hospital_1.insertIntoPatient)(id, name, phoneNumber, email, newPassword, gender, emergencyContact, address);
+            const newUser = yield (0, auth_hospital_1.insertIntoPatient)(id, name, Number(phoneNumber), email, newPassword, gender, emergencyContact, address);
             const token = yield this.createSendtoken(id);
             const data = {
                 message: "Successfully Created",
@@ -130,7 +131,7 @@ class signupService {
                 httpOnly: true,
             };
             res.cookie("jwt", token, cookieOptions);
-            res.status(201).json({ data, token: token });
+            res.status(200).json({ data, token: token });
         });
         this.loginPatient = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
@@ -158,7 +159,7 @@ class signupService {
                 httpOnly: true,
             };
             res.cookie("jwt", token, cookieOptions);
-            res.status(201).json({ data, token: token });
+            res.status(200).json({ data, token: token });
         });
     }
 }
