@@ -57,7 +57,8 @@ class signupService {
             // Check if the email is already registered
             const emailExists = yield (0, auth_hospital_1.isEmailExistInHospital)(email);
             if (emailExists.rows.length > 0) {
-                return res.status(400).json({ message: "Email already registered" });
+                res.status(400).json({ message: "Email already registered" });
+                return;
             }
             // Insert the new user into the database
             const id = (0, uuid_1.v4)();
@@ -72,7 +73,7 @@ class signupService {
             //these are the cookie options...
             const cookieOptions = {
                 //converting into ms
-                expiresIn: new Date(Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60),
+                expiresIn: new Date(Date.now() + Number(90) * 24 * 60 * 60),
                 //this will prevent the browser from accessing the cookie and make it transportOnly
                 httpOnly: true,
                 sameSite: "none", // Set the SameSite attribute to None
@@ -111,14 +112,16 @@ class signupService {
             const { email, password } = req.body;
             const result = yield (0, auth_hospital_1.loginEmailHospital)(email);
             if (result.rows.length === 0) {
-                return res.status(404).json({ message: "User not found" });
+                res.status(404).json({ message: "User not found" });
+                return;
             }
             const user = result.rows[0];
             // Compare the hashed password
             const passCompare = (0, hashPassword_1.comparePassword)(password, user.password);
             const isPasswordValid = yield passCompare;
             if (!isPasswordValid) {
-                return res.status(401).json({ message: "Invalid password" });
+                res.status(401).json({ message: "Invalid password" });
+                return;
             }
             const token = yield this.createSendtoken(user.id);
             const data = {

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginEmailPatient = exports.loginEmailHospital = exports.insertIntoPatient = exports.insertIntoHospital = exports.isEmailExistInPatient = exports.isEmailExistInHospital = void 0;
+exports.isHospitalExistusingId = exports.loginEmailPatient = exports.loginEmailHospital = exports.insertIntoPatient = exports.insertIntoHospital = exports.isEmailExistInPatient = exports.isEmailExistInHospital = void 0;
 const db_config_1 = __importDefault(require("../configs/db.config"));
 const isEmailExistInHospital = (email) => __awaiter(void 0, void 0, void 0, function* () {
     const checkEmailQuery = "SELECT * FROM public.hospital WHERE email = $1";
@@ -87,3 +87,9 @@ const loginEmailPatient = (email) => __awaiter(void 0, void 0, void 0, function*
     return result;
 });
 exports.loginEmailPatient = loginEmailPatient;
+const isHospitalExistusingId = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const checkIdQuery = "SELECT * FROM public.hospital WHERE id = $1";
+    const result = yield db_config_1.default.query(checkIdQuery, [id]);
+    return result;
+});
+exports.isHospitalExistusingId = isHospitalExistusingId;

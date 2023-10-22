@@ -99,3 +99,10 @@ export const loginEmailPatient = async (email: string) => {
 	const result = await pool.query(checkEmailQuery, [email]);
 	return result;
 };
+
+export const isHospitalExistusingId = async (id: string) => {
+	const checkIdQuery = "SELECT * FROM public.hospital WHERE id = $1";
+
+	const result = await pool.query(checkIdQuery, [id]);
+	return result;
+}

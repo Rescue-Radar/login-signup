@@ -48,7 +48,8 @@ export class signupService {
 		// Check if the email is already registered
 		const emailExists = await isEmailExistInHospital(email);
 		if (emailExists.rows.length > 0) {
-			return res.status(400).json({ message: "Email already registered" });
+			 res.status(400).json({ message: "Email already registered" });
+			 return;
 		}
 
 		// Insert the new user into the database
@@ -76,10 +77,10 @@ export class signupService {
 			user: newUser.rows[0],
 		};
 		//these are the cookie options...
-		const cookieOptions = {
+		const cookieOptions :any= {
 			//converting into ms
 			expiresIn: new Date(
-				Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60
+				Date.now() + Number(90) * 24 * 60 * 60
 			),
 			//this will prevent the browser from accessing the cookie and make it transportOnly
 			httpOnly: true,
@@ -144,7 +145,8 @@ export class signupService {
 
 		const result = await loginEmailHospital(email);
 		if (result.rows.length === 0) {
-			return res.status(404).json({ message: "User not found" });
+			 res.status(404).json({ message: "User not found" });
+			 return;
 		}
 
 		const user = result.rows[0];
@@ -153,7 +155,8 @@ export class signupService {
 		const passCompare = comparePassword(password, user.password);
 		const isPasswordValid = await passCompare;
 		if (!isPasswordValid) {
-			return res.status(401).json({ message: "Invalid password" });
+			 res.status(401).json({ message: "Invalid password" });
+			 return;
 		}
 		const token = await this.createSendtoken(user.id);
 		const data = {

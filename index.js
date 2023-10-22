@@ -32,7 +32,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config({ path: `${__dirname}/config.env` });
-const port = 8000 || process.env.PORT || 8000;
+const port = 9999 || process.env.PORT || 5000;
 //handle uncaught err
 // process.on("uncaughtException", function (err) {
 //   console.log(`uncaughterror-> ${err}`);
@@ -50,9 +50,7 @@ app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use(cors({
-    credentials: true,
-}));
+// app.use(cors());
 app.use(cookieParser());
 app.use("/api", caseRoutes_1.default);
 app.use("/api", auth_routes_1.default);
@@ -68,6 +66,6 @@ app.get("/", (req, res) => {
 app.get("*", (req, res) => {
     res.status(404).json({ message: "Route not found" });
 });
-app.listen(8000, () => {
+app.listen(port, () => {
     console.log(`server is running at port ${port} `);
 });

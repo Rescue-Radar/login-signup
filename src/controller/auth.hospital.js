@@ -35,6 +35,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signupPatient = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 const auth_hospital_1 = require("../service/auth.hospital");
+const dotenv = __importStar(require("dotenv"));
+const auth_hospital_2 = require("../queries/auth.hospital");
+dotenv.config({ path: `${__dirname}/.env` });
 class SignupHospital extends auth_hospital_1.signupService {
     constructor() {
         super(...arguments);
@@ -71,31 +74,28 @@ class SignupHospital extends auth_hospital_1.signupService {
             }
         });
         this.protect = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            let token;
             try {
-                // Getting the token & Checking if it is there with the header
-                if (req.headers.authorization &&
-                    req.headers.authorization.startsWith("Bearer")) {
-                    token = req.headers.authorization.split(" ")[1];
-                }
-                else if (req.cookies.jwt) {
-                    // To check for the jwt in cookie
-                    token = req.cookies.jwt;
+                const authorizationHeader = req.headers.authorization;
+                if (authorizationHeader) {
+                    const token = authorizationHeader.split(' ')[1];
+                    const payload = jwt.verify(token, "cat-human-mat-mouse-dog-elephant-phone-id");
+                    console.log(payload);
+                    if (payload) {
+                        const id = payload.userId;
+                        const result = yield (0, auth_hospital_2.isHospitalExistusingId)(id);
+                        const user = result.rows[0];
+                        if (user) {
+                            res.status(200).json({ message: "authorized" });
+                        }
+                    }
                 }
                 else {
-                    throw new Error("You are not logged in, please login to get access");
+                    res.status(401).json({ error: "LogIn to access" });
                 }
-                if (!process.env.JWT_SECRET) {
-                    throw new Error("Misssing JWT_SECRET");
-                }
-                // Verification of Token
-                const payload = yield jwt.verify(token, process.env.JWT_SECRET);
-                // Continue with the next middleware or route handler
-                res.status(200).json({ message: "Authorized" });
             }
             catch (error) {
                 // Handle the error and return a response
-                res.status(401).json({ error: "Unauthorized" });
+                res.status(401).json({ error: "unauthorized" });
             }
         });
     }

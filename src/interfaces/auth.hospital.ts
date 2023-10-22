@@ -33,3 +33,8 @@ export interface loginUser {
 	email: string;
 	password: string;
 }
+
+
+export interface JwtPayload {
+	userId: string
+  }
