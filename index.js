@@ -31,8 +31,8 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dotenv = __importStar(require("dotenv"));
-dotenv.config({ path: `${__dirname}/config.env` });
-const port = 9999 || process.env.PORT || 5000;
+dotenv.config({ path: `${__dirname}/.env` });
+const port = process.env.PORT || 5000;
 //handle uncaught err
 // process.on("uncaughtException", function (err) {
 //   console.log(`uncaughterror-> ${err}`);

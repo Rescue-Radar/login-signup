@@ -39,6 +39,8 @@ const uuid_1 = require("uuid");
 const hashPassword_1 = require("../util/hashPassword");
 // import { userInfo } from "os";
 // import { json } from "body-parser";
+const dotenv = __importStar(require("dotenv"));
+dotenv.config({ path: `${__dirname}/.env` });
 class signupService {
     constructor() {
         //---------------------------------------------------------------------------

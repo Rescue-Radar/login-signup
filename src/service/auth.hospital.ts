@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from "uuid";
 import { comparePassword, hashPassword } from "../util/hashPassword";
 // import { userInfo } from "os";
 // import { json } from "body-parser";
+import * as dotenv from "dotenv";
+dotenv.config({ path: `${__dirname}/.env` });
 export class signupService {
 	//---------------------------------------------------------------------------
 	public createSendtoken = async (userId: string) => {
@@ -209,3 +211,4 @@ export class signupService {
 		res.status(200).json({ data, token: token });
 	};
 }
+
