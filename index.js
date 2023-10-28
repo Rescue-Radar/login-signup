@@ -54,6 +54,15 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api", caseRoutes_1.default);
 app.use("/api", auth_routes_1.default);
+app.get("/healthz", (req, res) => {
+    const CurrentDateTime = new Date().toLocaleString();
+    res.status(200).json({
+        HTTPCode: "200",
+        Status: "OK",
+        message: "Welcome to Home",
+        EntryTime: CurrentDateTime,
+    });
+});
 app.get("/", (req, res) => {
     const CurrentDateTime = new Date().toLocaleString();
     res.status(200).json({
