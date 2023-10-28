@@ -46,6 +46,15 @@ app.get("/", (req: Request, res: Response) => {
     EntryTime: CurrentDateTime,
   });
 });
+app.get("/healthz", (req: Request, res: Response) => {
+  const CurrentDateTime = new Date().toLocaleString();
+  res.status(200).json({
+    HTTPCode: "200",
+    Status: "OK",
+    message: "Welcome to Home",
+    EntryTime: CurrentDateTime,
+  });
+});
 app.get("*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
