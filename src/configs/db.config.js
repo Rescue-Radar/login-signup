@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
 const pool = new pg_1.Pool({
     user: 'ankitkumar',
-    host: 'rescueradar.cjon0daiisn3.ap-south-1.rds.amazonaws.com',
+    host: '127.0.0.1',
     database: 'rescueradar',
     password: 'rescueradar',
-    port: 5432,
-    ssl: {
-        rejectUnauthorized: true,
-    },
+    port: 55601, // Your PostgreSQL port
+    //   ssl: {
+    // 	rejectUnauthorized: true,
+    // },
 });
 pool
     .connect()

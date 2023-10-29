@@ -33,7 +33,7 @@ const cookieParser = require("cookie-parser");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config({ path: `${__dirname}/.env` });
 const port = process.env.PORT || 5000;
-//handle uncaught err
+// handle uncaught err
 // process.on("uncaughtException", function (err) {
 //   console.log(`uncaughterror-> ${err}`);
 // });
