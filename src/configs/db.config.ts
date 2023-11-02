@@ -3,11 +3,11 @@ import { Pool } from 'pg';
  
 
 const pool = new Pool({
-    user: 'ankitkumar',
-    host: '127.0.0.1', // Your PostgreSQL host
+    user: 'postgres',
+    host: 'postgres', // Your PostgreSQL host
     database: 'rescueradar',
-    password: 'rescueradar',
-    port: 55601 , // Your PostgreSQL port
+    password: 'root',
+    port: 5432, // Your PostgreSQL port
   //   ssl: {
 	// 	rejectUnauthorized: true,
 	// },

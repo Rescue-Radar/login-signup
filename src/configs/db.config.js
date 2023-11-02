@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
 const pool = new pg_1.Pool({
-    user: 'ankitkumar',
-    host: '127.0.0.1',
+    user: 'postgres',
+    host: 'postgres',
     database: 'rescueradar',
-    password: 'rescueradar',
-    port: 55601, // Your PostgreSQL port
+    password: 'root',
+    port: 5432, // Your PostgreSQL port
     //   ssl: {
     // 	rejectUnauthorized: true,
     // },
