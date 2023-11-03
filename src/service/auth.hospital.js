@@ -64,8 +64,8 @@ class signupService {
             }
             // Insert the new user into the database
             const id = (0, uuid_1.v4)();
-            const hashedPassword = (0, hashPassword_1.hashPassword)(password);
-            const newPassword = yield hashedPassword;
+            const hashedPassword = yield (0, hashPassword_1.hashPassword)(password);
+            const newPassword = hashedPassword;
             const newUser = yield (0, auth_hospital_1.insertIntoHospital)(id, name, phoneNumber, email, newPassword, licenseId, capacity, longitude, latitude, address, status);
             const token = yield this.createSendtoken(id);
             const data = {

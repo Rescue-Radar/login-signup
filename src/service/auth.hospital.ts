@@ -56,8 +56,8 @@ export class signupService {
 
 		// Insert the new user into the database
 		const id: string = uuidv4();
-		const hashedPassword = hashPassword(password);
-		const newPassword: string = await hashedPassword;
+		const hashedPassword = await hashPassword(password);
+		const newPassword: string =  hashedPassword;
 
 		const newUser = await insertIntoHospital(
 			id,
