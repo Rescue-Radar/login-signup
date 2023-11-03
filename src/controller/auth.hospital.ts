@@ -28,8 +28,8 @@ export default class SignupHospital extends signupService {
 	public signupPatientUser = async (req: Request, res: Response) => {
 		try {
 			await this.signupPatient(req, res);
-		} catch (error) {
-			res.status(500).json({ error: "Internal server error" });
+		} catch (error:any) {
+			res.status(500).json({ error: "Internal server error",errorMsg:error.message });
 		}
 	};
 

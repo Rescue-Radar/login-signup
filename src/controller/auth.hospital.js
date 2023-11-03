@@ -62,7 +62,7 @@ class SignupHospital extends auth_hospital_1.signupService {
                 yield this.signupPatient(req, res);
             }
             catch (error) {
-                res.status(500).json({ error: "Internal server error" });
+                res.status(500).json({ error: "Internal server error", errorMsg: error.message });
             }
         });
         this.loginPatientUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
